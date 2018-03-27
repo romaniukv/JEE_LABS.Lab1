@@ -18,7 +18,7 @@ public class Book {
 
     private float price;
 
-        private String description;
+    private String description;
 
     private boolean available;
 
