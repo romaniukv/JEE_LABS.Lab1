@@ -3,6 +3,7 @@ package labwork1.dao;
 import labwork1.utils.DBConnection;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public abstract class AbstractDAO<T> implements DAO<T>{
             PreparedStatement ps = connection.prepareStatement(FIND_ALL);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                T entity = entityClass.newInstance();
+                T entity = entityClass.getConstructor().newInstance();
                 setEntityId(entity, rs.getInt("id"));
                 for (String parametersName : parametersNames) {
                     Field field = entityClass.getDeclaredField(parametersName);
@@ -43,7 +44,7 @@ public abstract class AbstractDAO<T> implements DAO<T>{
                 }
                 entities.add(entity);
             }
-        } catch (SQLException | InstantiationException | IllegalAccessException | NoSuchFieldException e) {
+        } catch (SQLException | InstantiationException | IllegalAccessException | NoSuchFieldException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return entities;
