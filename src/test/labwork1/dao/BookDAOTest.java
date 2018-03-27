@@ -27,7 +27,7 @@ public class BookDAOTest {
         testBook.setPrice(443);
         bookDAO.update(testBook);
         Book book = bookDAO.findByKey(id);
-        bookDAO.findByKey(id);
+        bookDAO.deleteByKey(id);
         assertEquals(testBook, book);
     }
 }
